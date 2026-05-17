@@ -1,8 +1,10 @@
 let productos = JSON.parse(localStorage.getItem('productos_tiendita')) || [
+    { id: 1, nombre: "Takis Fuego", precio: 15, cat: "snacks", img: "img/takis.jpg" },
+    { id: 2, nombre: "Boba Tea Taro", precio: 45, cat: "bebidas", img: "img/boba.jpg" }
 ];
 
 let carrito = JSON.parse(localStorage.getItem('carrito_tiendita')) || [];
-let imagenProductoTemporal = ""; 
+let imagenProductoTemporal = "";
 
 function showSection(sectionId) {
     const sections = ['inicio-sec', 'catalogo-sec', 'carrito-sec', 'ubicacion-sec', 'contacto-sec'];
@@ -40,7 +42,7 @@ function renderClienteCatalog() {
             <img src="${prod.img}" alt="${prod.nombre}" style="width:100%; height:140px; object-fit:cover; border-radius:8px;">
             <h3>${prod.nombre}</h3>
             <p class="price">$${prod.precio}</p>
-            <button class="add-btn" onclick="agregarAlCarrito(${prod.id})">Agregar 🛒</button>
+            <button class="add-btn" onclick="agregarAlCarrito(${prod.id})">Agregar</button>
         `;
         container.appendChild(card);
     });
@@ -58,7 +60,7 @@ function agregarAlCarrito(id) {
         }
         
         localStorage.setItem('carrito_tiendita', JSON.stringify(carrito));
-        alert(`${prod.nombre} añadido al pedido.`);
+        alert("Producto añadido.");
     }
 }
 
@@ -183,7 +185,6 @@ function cargarConfiguracionesCliente() {
     }
 }
 
-
 function renderAdminCatalog() {
     const container = document.getElementById('admin-catalog-container');
     if (!container) return;
@@ -203,7 +204,7 @@ function renderAdminCatalog() {
                 <input type="number" value="${prod.precio}" onchange="cambiarPrecio(${prod.id}, this.value)" style="width:70px; padding:4px; background:#222; color:white; border:1px solid #444;">
             </div>
             <button onclick="eliminarProducto(${prod.id})" style="background:#ff0055; color:white; border:none; padding:6px 12px; border-radius:5px; cursor:pointer; width:100%;">
-                <i class="fas fa-trash"></i> Eliminar
+                Eliminar
             </button>
         `;
         container.appendChild(card);
@@ -230,10 +231,9 @@ function crearProductoNuevoAdmin() {
     const nombre = document.getElementById('admin-nombre').value;
     const precio = parseFloat(document.getElementById('admin-precio').value);
     const cat = document.getElementById('admin-cat').value;
-    
     const img = imagenProductoTemporal || "img/logo.jpeg";
 
-    if (!nombre || !precio || !cat) return alert("Llena los campos obligatorios");
+    if (!nombre || !precio || !cat) return alert("Campos obligatorios incompletos");
 
     const nuevoProd = { id: Date.now(), nombre, precio, cat, img };
     productos.push(nuevoProd);
@@ -251,7 +251,7 @@ function crearProductoNuevoAdmin() {
     imagenProductoTemporal = ""; 
     
     renderAdminCatalog();
-    alert("¡Producto añadido con su foto de galería! 🎉");
+    alert("Producto añadido.");
 }
 
 function cambiarPrecio(id, nuevoPrecio) {
@@ -264,7 +264,7 @@ function cambiarPrecio(id, nuevoPrecio) {
 }
 
 function eliminarProducto(id) {
-    if (confirm("¿Eliminar este producto?")) {
+    if (confirm("¿Eliminar producto?")) {
         productos = productos.filter(p => p.id !== id);
         localStorage.setItem('productos_tiendita', JSON.stringify(productos));
         renderAdminCatalog();
@@ -282,7 +282,7 @@ function procesarLogoGaleria(input) {
             const preview = document.getElementById('admin-current-logo');
             if (preview) preview.src = imagenBase64;
             
-            alert("¡Logo actualizado desde tu galería con éxito! 🎉");
+            alert("Logo actualizado.");
         };
         reader.readAsDataURL(file);
     }
@@ -292,7 +292,7 @@ function actualizarContacto() {
     const tel = document.getElementById('input-contacto-tel').value;
     if (tel) {
         localStorage.setItem('tiendita_whatsapp', tel);
-        alert("WhatsApp actualizado.");
+        alert("Contacto actualizado.");
     }
 }
 
@@ -300,8 +300,8 @@ function actualizarDireccionMapa() {
     const direccion = document.getElementById('input-direccion-mapa').value;
     if (direccion) {
         localStorage.setItem('tiendita_direccion', direccion);
-        alert("Ubicación de la tienda guardada.");
+        alert("Ubicación guardada.");
     } else {
-        alert("Por favor escribe una dirección válida.");
+        alert("Dirección no válida.");
     }
 }
