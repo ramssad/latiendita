@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Tiendita - Catálogo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/diseño.css">
+</head>
+<body>
+
+    <header class="hero-section">
+        <img src="img/logo.jpeg" alt="Logo La Tiendita" class="main-logo" id="cliente-logo">
+        <p>Gracias por su preferencia</p>
+    </header>
+
+    <nav class="sticky-nav">
+        <div class="tab active" id="tab-inicio" onclick="showSection('inicio')">INICIO</div>
+        <div class="tab" id="tab-carrito" onclick="showSection('carrito')">MI CARRITO</div>
+    </nav>
+
+    <main class="container">
+        
+        <section id="inicio-sec">
+            <div class="main-menu-grid">
+                <div class="menu-card" onclick="showSection('catalogo')">
+                    <i class="fas fa-book-open"></i>
+                    <h3>CATÁLOGO</h3>
+                    <p>Snack´s, bebidas</p>
+                </div>
+                <div class="menu-card" onclick="showSection('carrito')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>MI CARRITO</h3>
+                    <p>Tus pedidos</p>
+                </div>
+                <div class="menu-card" onclick="showSection('ubicacion')">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>UBICACIÓN</h3>
+                    <p>Visítanos</p>
+                </div>
+                <div class="menu-card" onclick="showSection('contacto')">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>CONTACTO</h3>
+                </div>
+            </div>
+        </section>
+
+        <section id="catalogo-sec" style="display:none;">
+            <h2 class="section-title">Nuestro Catálogo</h2>
+            <div id="catalog-container" class="grid-catalog"></div>
+        </section>
+
+        <section id="carrito-sec" style="display:none;">
+            <h2 class="section-title">TU PEDIDO</h2>
+            <div class="card-info ticket-container">
+                <div id="lista-carrito"></div>
+                <hr>
+                <div class="ticket-total">
+                    <h3>TOTAL: $<span id="total-pedido">0</span></h3>
+                </div>
+                <button class="add-btn btn-hacer-pedido" onclick="enviarPedido()">
+                    <i class="fab fa-whatsapp"></i> HACER PEDIDO
+                </button>
+            </div>
+        </section>
+
+        <section id="ubicacion-sec" style="display:none;">
+            <h2 class="section-title">Encuéntranos</h2>
+            <div class="card-info">
+                <p><strong>Dirección:</strong> 
+                <div id="wrapper-mapa">
+                    </div>
+                </p>
+                <p>Ciudad Valles, S.L.P.</p>
+            </div>
+        </section>
+
+        <section id="contacto-sec" style="display:none;">
+            <h2 class="section-title">Contacto Directo</h2>
+            <div class="card-info">
+                <p><i class="fab fa-whatsapp"></i> <strong>WhatsApp:</strong> <span id="text-contacto-tel">481-123-73-73</span></p>
+                <button class="add-btn" id="btn-wa-dinamico">Enviar Mensaje</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/catalogo.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem('rol_usuario')) {
+                window.location.href = 'index.html';
+            }
+            cargarConfiguracionesCliente();
+        });
+    </script>
+
+    <div class="dev-signature">
+        <span>© 2026 | Hecho por <strong>Adriana M. Ramos</strong></span>
+    </div>
+</body>
+</html>

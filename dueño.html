@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Tiendita - Panel</title>
+    <link class="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/diseño.css">
+</head>
+<body class="admin-body-page">
+
+    <header class="hero-section admin-hero">
+        <div class="logo-preview-container">
+            <img src="img/logo.jpeg" alt="Logo La Tiendita" class="main-logo" id="admin-current-logo">
+        </div>
+        <h1>PANEL</h1>
+        <p>Administración</p>
+        <button class="btn-logout" onclick="cerrarSesionAdmin()">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></button>
+    </header>
+
+    <main class="container">
+
+        <section class="admin-section">
+            <h2 class="section-title"><i class="fas fa-cogs"></i> Datos de la Tienda</h2>
+            <div class="card-info admin-card-grid">
+                
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> Cambiar logo :</label>
+                    <input type="file" id="input-logo-galeria" accept="image/*" style="display: none;" onchange="procesarLogoGaleria(this)">
+                    <button class="add-btn btn-save-setting" onclick="document.getElementById('input-logo-galeria').click()">
+                        <i class="fas fa-folder-open"></i> Abrir Galería
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fab fa-whatsapp"></i> Teléfono de WhatsApp:</label>
+                    <input type="text" id="input-contacto-tel" placeholder="Ej: 524811237373">
+                    <button class="add-btn btn-save-setting" onclick="actualizarContacto()">Guardar Contacto</button>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> Configurar Ubicación:</label>
+                    <p style="font-size: 12px; color: #aaa; margin: 0 0 10px 0;">Escribe tu dirección para actualizar el mapa automáticamente:</p>
+                    <input type="text" id="input-direccion-mapa" placeholder="Ej: Calle Hidalgo 100, Centro, Ciudad Valles, SLP">
+                    <button class="add-btn btn-save-setting" onclick="actualizarDireccionMapa()">Actualizar Ubicación</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <h2 class="section-title"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto</h2>
+            <div class="card-info">
+                <div class="admin-form-inputs">
+                    <input type="text" id="admin-nombre" placeholder="Nombre del producto">
+                    <input type="number" id="admin-precio" placeholder="Precio ($)">
+                    <input type="text" id="admin-cat" placeholder="Categoría (snacks/bebidas)">
+                    
+                    <div style="margin: 10px 0; text-align: left;">
+                        <label style="color: white; display: block; margin-bottom: 5px; font-size: 14px;"><i class="fas fa-image"></i> Foto del producto:</label>
+                        <input type="file" id="admin-img-galeria" accept="image/*" style="display: none;" onchange="previsualizarFotoProducto(this)">
+                        <button class="add-btn" type="button" onclick="document.getElementById('admin-img-galeria').click()" style="background: #333; margin-bottom: 10px;">
+                            <i class="fas fa-folder-open"></i> Seleccionar de la Galería
+                        </button>
+                        <img id="preview-nuevo-producto" src="" style="display: none; width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin-top: 5px;">
+                    </div>
+
+                    <button class="add-btn btn-add-product" onclick="crearProductoNuevoAdmin()">
+                        <i class="fas fa-save"></i> Agregar al Catálogo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <h2 class="section-title"><i class="fas fa-boxes"></i> Modificar Catálogo</h2>
+            <div id="admin-catalog-container" class="grid-catalog"></div>
+        </section>
+
+    </main>
+
+    <div class="dev-signature">
+        <span>© 2026 | Hecho por <strong>Adriana M. Ramos</strong></span>
+    </div>
+
+    <script src="js/catalogo.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem('rol_usuario') !== 'dueno') {
+                window.location.href = 'index.html';
+                return;
+            }
+            renderAdminCatalog();
+            cargarConfiguracionesActuales();
+        });
+
+        function cerrarSesionAdmin() {
+            localStorage.removeItem('rol_usuario');
+            window.location.href = 'index.html';
+        }
+
+        function cargarConfiguracionesActuales() {
+            const contacto = localStorage.getItem('tiendita_whatsapp') || "524811237373";
+            const direccion = localStorage.getItem('tiendita_direccion') || "";
+            const logo = localStorage.getItem('tiendita_logo') || "img/logo.jpeg";
+
+            document.getElementById('input-contacto-tel').value = contacto;
+            document.getElementById('input-direccion-mapa').value = direccion;
+            document.getElementById('admin-current-logo').src = logo;
+        }
+    </script>
+</body>
+</html>

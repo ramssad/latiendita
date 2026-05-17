@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - La Tiendita</title>
+    <link rel="stylesheet" href="style/diseño.css"> 
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <h2>¡Bienvenido!</h2>
+        <p class="login-subtitle">Selecciona para ingresar al catálogo</p>
+        
+        <div class="login-buttons">
+            <button class="btn-perfil btn-cliente" onclick="ingresar('cliente')">
+                <span>Cliente</span> 
+            </button>
+            <button class="btn-perfil btn-dueno" onclick="ingresar('dueno')">
+                <span>Dueño</span> 
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function ingresar(perfil) {
+            if (perfil === 'cliente') {
+                localStorage.setItem('rol_usuario', 'cliente');
+                window.location.href = 'cliente.html';
+            } else if (perfil === 'dueno') {
+                const pass = prompt("Introduce la contraseña de administrador:");
+                if (pass === "tiendita2026") {
+                    alert("Accesso permitido");
+                    localStorage.setItem('rol_usuario', 'dueno');
+                    window.location.href = 'dueño.html';
+                } else {
+                    alert("Contraseña incorrecta.");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
